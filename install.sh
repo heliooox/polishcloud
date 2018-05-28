@@ -72,7 +72,3 @@ $RightID : PSK "$PSK1"
 EOF
 
 
-
-
-
-
