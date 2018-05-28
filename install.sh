@@ -13,7 +13,12 @@ echo "[+] configure strongswan..."
 echo "[conf] enter Right External IP: "
 read RExIP
 echo "[conf] enter Right Internal subnet: "
-read RInIP
+read RInSub
+
+echo "[conf] enter Right ID (an email format): "
+read RightID
+echo "[conf] enter Left ID (an email format): "
+read LeftID
 
 #password  PSK
 
@@ -33,6 +38,39 @@ function pass () {
 }
 
 pass
+
+echo "[+] Setup ipsec connection..."
+
+cat "" /etc/ipsec.conf
+cat <<EOF>> /etc/ipsec.conf
+
+conn %defult
+	ikelifetime=28800s
+	lifetime=3600s
+	keyingtries=1
+	keyexchange=ikev2
+
+conn vpn-core
+	authby=secret
+	ike=3des-sha1-modp1024
+	esp=3des-sha1
+	left=%defaultroute
+	leftsourceip=%config
+	leftfirewall=yes
+	right=$RExIP
+	rightsubnet=$RInSub
+	leftid=$LeftID
+	rightid=$RightID
+	auto=add
+
+EOF
+
+cat <<EOF>> /etc/ipsec.secrets
+
+$RightID : PSK "$PSK1"
+
+EOF
+
 
 
 
