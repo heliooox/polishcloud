@@ -27,7 +27,7 @@ function pass () {
         echo ""
         read -s -p "[conf] confirm PSK Key: " PSK2
         echo ""
-        if [ $PSK1 != $PSK2 ]; then
+        if [ "$PSK1" != "$PSK2" ]; then
                 echo ""
 		echo "PSK don't match - try again"
 		echo ""
