@@ -1,0 +1,17 @@
+#!/bin/bash
+function pass () {
+        read -s -p "[conf] enter PSK Key: " PSK1
+	echo ""
+        read -s -p "[conf] confirm PSK Key: " PSK2
+	echo ""
+	if [ $PSK1 != $PSK2 ]; then
+                echo "PSK don't match - try again"
+		pass
+        else
+        	exit
+	fi
+}
+
+pass
+
+
