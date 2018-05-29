@@ -1,0 +1,25 @@
+#!/usr/bin/expect -f
+
+set date [clock format [clock seconds] -format {%Y-%m-%d}]
+set timeout 90
+spawn ssh username@192.168.1.36
+expect "password: "
+send "password\r"
+expect "*$ "
+send "sudo su\r"
+expect "*: "
+send "password\r"
+expect "*# "
+send "rm -f backup*.sql\r"
+expect "*# "
+send "mysqldump -u root -p --single-transaction --routines --triggers meditech > backup.$date.sql\r"
+expect "*: "
+send "sql_password\r"
+expect "*# "
+send "scp backup.$date.sql username@Raspbian-IP:/backup\r"
+expect "*password:*"
+send "rasp_password\r"
+expect "*# "
+send "exit\r"
+expect "*$ "
+send "exit\r"
