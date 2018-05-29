@@ -8,7 +8,13 @@ apt-get -y install strongswan iptables-persistent
 echo "[+] Install pip..."
 apt-get -y install python-pip
 echo "[+] Install aws..."
-pip install awscli
+pip install awscli --upgrade --user
+echo "[+] Modify path..."
+echo "export PATH=~/.local/bin:$PATH" >> ~/.profile
+echo "[+] Reload profile..."
+source ~/.profile
+echo "[+] Configure aws..."
+aws configure
 echo "[+] configure strongswan..."
 echo "[conf] enter Right External IP: "
 read RExIP
