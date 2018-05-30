@@ -26,4 +26,18 @@ gpg --batch --gen-key gen-key-script
 
 service rng-tools stop
 
+echo "[+] Generate encryption script..."
+
+: > encrypt.sh
+
+Name=nazwa
+cat <<EOF>> encrypt.sh
+#!/bin/bash
+NameConst=$Name.$(date +%F_%R)
+zip -r $NameConst /mnt/backup 
+gpg --encrypt --recipient "$Name" "$NameConst"
+cp "$NameConst" /mnt/vpn-core/
+EOF
+
+echo "[+] Finished..."
 
