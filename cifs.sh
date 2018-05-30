@@ -9,7 +9,7 @@
 apt-get -y update
 apt-get -y install cifs-utils
 
-mkdir -p /mnt/win
+mkdir -p /mnt/backup
 
 read -p "Username: " User
 
@@ -41,6 +41,6 @@ if [ ! -f /etc/fstab.old ]; then
 	cp /etc/fstab /etc/fstab.old
 fi
 
-echo "//$IP/$SH/ /mnt/win cifs credentials=/etc/cifspasswd,sec=ntlmssp  0  0" >> /etc/fstab
+echo "//$IP/$SH/ /mnt/backup cifs credentials=/etc/cifspasswd,sec=ntlmssp  0  0" >> /etc/fstab
 mount -a
 
