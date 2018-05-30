@@ -16,7 +16,7 @@ send "mysqldump -u root -p --single-transaction --routines --triggers meditech >
 expect "*: "
 send "sql_password\r"
 expect "*# "
-send "scp backup.$date.sql username@Raspbian-IP:/backup\r"
+send "scp backup.$date.sql username@Raspbian-IP:/mnt/backup\r"
 expect "*password:*"
 send "rasp_password\r"
 expect "*# "
