@@ -1,8 +1,8 @@
 #!/bin/bash
-echo "[+] Update repos..."
-apt-get update
-echo "[+] Install ssh server..."
-apt-get -y install openssh-server
+#echo "[+] Update repos..."
+#apt-get update
+#echo "[+] Install ssh server..."
+#apt-get -y install openssh-server
 echo "[+] Install strongswan..."
 apt-get -y install strongswan iptables-persistent
 echo "[+] Install pip..."
@@ -38,8 +38,6 @@ function pass () {
 		echo "PSK don't match - try again"
 		echo ""
                 pass
-        else
-                exit
         fi
 }
 
@@ -47,7 +45,6 @@ pass
 
 echo "[+] Setup ipsec connection..."
 
-cat "" /etc/ipsec.conf
 cat <<EOF>> /etc/ipsec.conf
 
 conn %defult
@@ -76,5 +73,7 @@ cat <<EOF>> /etc/ipsec.secrets
 $RightID : PSK "$PSK1"
 
 EOF
+
+echo "[+] Installation successfuly finished..."
 
 
