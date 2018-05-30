@@ -1,6 +1,7 @@
 #!/bin/bash
 
 apt-get -y install rng-tools
+apt-get -y install zip
 echo "HRNGDEVICE=/dev/urandom" >> /etc/default/rng-tools
 service rng-tools restart
 
@@ -29,14 +30,17 @@ service rng-tools stop
 echo "[+] Generate encryption script..."
 
 : > encrypt.sh
+: > /var/log/polishcloud.log
 
-Name=nazwa
+
 cat <<EOF>> encrypt.sh
 #!/bin/bash
-NameConst=$Name.$(date +%F_%R)
-zip -r $NameConst /mnt/backup 
-gpg --encrypt --recipient "$Name" "$NameConst"
-cp "$NameConst" /mnt/vpn-core/
+Nameconst=$Name.\$(date +%F_%R)
+zip -r /mnt/backup/\$Nameconst /mnt/backup 
+gpg --yes --encrypt --recipient "$Name" "/mnt/backup/\$Nameconst"
+cp "/mnt/backup/\$Nameconst" /mnt/vpn-core/
+echo "\$Nameconst" >> /var/log/polishcloud.log
+
 EOF
 
 echo "[+] Finished..."
