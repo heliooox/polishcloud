@@ -6,13 +6,13 @@
 # $ umount -t /share
 # $ mount -a
 
-apt-get -y update
+#apt-get -y update
 apt-get -y install cifs-utils
 
 mkdir -p /mnt/backup
 mkdir -p /mnt/vpn-core
 
-read -p "Username: " User
+read -p "Windows username: " User
 
 function pass () {
         read -s -p "[conf] enter windows password: " PSK1
@@ -28,12 +28,14 @@ function pass () {
 }
 pass
 
+read -p "NAS username: " User2
+
 function pass-nas () {
         read -s -p "[conf] enter NAS password: " NAS1
         echo ""
         read -s -p "[conf] confirm NAS password: " NAS2
         echo ""
-        if [ "$NAS1" != "$nas2" ]; then
+        if [ "$NAS1" != "$NAS2" ]; then
                 echo ""
                 echo "[error] Password's don't match - try again"
                 echo ""

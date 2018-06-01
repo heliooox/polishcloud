@@ -3,6 +3,9 @@
 #apt-get update
 #echo "[+] Install ssh server..."
 #apt-get -y install openssh-server
+
+echo "[+] Install nmap..."
+apt-get -y install nmap
 echo "[+] Install strongswan..."
 apt-get -y install strongswan iptables-persistent
 echo "[+] Install pip..."
