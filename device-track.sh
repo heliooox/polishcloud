@@ -5,7 +5,7 @@ if [ -z "$open" ]; then
         echo "closed"
         exit 1
 else
-        encrypt.sh
-        exit 0
+	ping -q -w 1 -c 1 212.14.7.25 > /dev/null && /root/git/polishcloud/encrypt.sh || exit 1
+	exit 0
 fi
 
