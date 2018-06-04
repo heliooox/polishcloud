@@ -71,9 +71,29 @@ conn vpn-core
 
 EOF
 
+
 cat <<EOF>> /etc/ipsec.secrets
 
 $RightID : PSK "$PSK1"
+
+EOF
+
+echo "[+] Configure Device-tracking..."
+echo "[conf] Enter internal Client IP: "
+read CLIENT_IP
+echo "[conf] Enter Port Number ( cifs 445, MySQL 3306, SSH 22) : "
+read PORT
+
+cat <<EOF>> device-track2.sh
+#!/bin/bash
+open=\`nmap -p $PORT $CLIENT_IP | grep open\`
+if [ -z "\$open" ]; then
+        echo "closed"
+        exit 1
+else
+        ping -q -w 1 -c 1 $RExIP > /dev/null && /root/git/polishcloud/encrypt.sh || exit 1
+        exit 0
+fi
 
 EOF
 
