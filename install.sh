@@ -84,7 +84,7 @@ read CLIENT_IP
 echo "[conf] Enter Port Number ( cifs 445, MySQL 3306, SSH 22) : "
 read PORT
 
-cat <<EOF>> device-track2.sh
+cat <<EOF>> device-track.sh
 #!/bin/bash
 open=\`nmap -p $PORT $CLIENT_IP | grep open\`
 if [ -z "\$open" ]; then
