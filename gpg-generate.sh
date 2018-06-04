@@ -35,11 +35,23 @@ echo "[+] Generate encryption script..."
 
 cat <<EOF>> encrypt.sh
 #!/bin/bash
+ipsec up vpn-core
+sleep 10
+mount -a
+sleep 10
 Nameconst=$Name.\$(date +%F_%R)
-zip -r /mnt/backup/\$Nameconst /mnt/backup 
+zip -r /mnt/backup/\$Nameconst /mnt/backup
+sleep 10
 gpg --yes --encrypt --recipient "$Name" "/mnt/backup/\$Nameconst"
-cp "/mnt/backup/\$Nameconst" /mnt/vpn-core/
-echo "\$Nameconst" >> /var/log/polishcloud.log
+if cp /mnt/backup/\$Nameconst.gpg /mnt/vpn-core/
+then
+        echo "Copy Success"
+        echo "$Nameconst" >> /var/log/polishcloud.log
+        ipsec down vpn-core
+else
+        echo "Copy Failure, exit status \$?"
+        ipsec down vpn-core
+fi
 
 EOF
 
